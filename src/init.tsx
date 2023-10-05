@@ -4,13 +4,13 @@ import { ThemeProvider } from '@emotion/react';
 import { useTheme } from '@mui/material/styles';
 
 const Init = () => {
-    const muiTheme = useTheme();
+  const muiTheme = useTheme();
 
-    return (
-        <ThemeProvider theme={muiTheme}>
-            <App />
-        </ThemeProvider>
-    );
+  return (
+    <ThemeProvider theme={muiTheme}>
+      <App />
+    </ThemeProvider>
+  );
 };
 
 export default Init;

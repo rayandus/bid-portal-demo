@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 import { cjsInterop } from 'vite-plugin-cjs-interop';
 
 // To resolve runtime issue when using @emotion/styled/macro
@@ -9,22 +9,18 @@ import { cjsInterop } from 'vite-plugin-cjs-interop';
 export default defineConfig({
   plugins: [
     cjsInterop({
-      dependencies: [
-        '@emotion/styled/base',
-        '@emotion/*',
-      ],
+      dependencies: ['@emotion/styled/base', '@emotion/*'],
     }),
     react({
-        jsxRuntime: 'automatic',
-        jsxImportSource: '@emotion/react',
-        babel: {
-          plugins: [
-            'babel-plugin-graphql-tag',
-            'babel-plugin-macros',
-            ['@emotion/babel-plugin', {}],
-          ],
-        },
+      jsxRuntime: 'automatic',
+      jsxImportSource: '@emotion/react',
+      babel: {
+        plugins: [
+          'babel-plugin-graphql-tag',
+          'babel-plugin-macros',
+          ['@emotion/babel-plugin', {}],
+        ],
       },
-    ),
+    }),
   ],
-})
+});
