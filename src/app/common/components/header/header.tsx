@@ -1,22 +1,21 @@
 import React from 'react';
 import styled from '@emotion/styled/macro';
-import {
-  AppBar,
-  Avatar,
-  Box,
-  Container,
-  IconButton,
-  Menu,
-  Toolbar,
-  Tooltip,
-  Typography,
-} from '@mui/material';
+import { AppBar, Container, Toolbar } from '@mui/material';
 import AdbIcon from '@mui/icons-material/Adb';
 import ProfileMenu from './profile-menu';
+import { useLocation } from 'react-router-dom';
+
+const EXLCUDE_PAGES = ['/login', '/register'];
 
 const Header = () => {
+  const { pathname } = useLocation();
+
+  if (EXLCUDE_PAGES.includes(pathname)) {
+    return null;
+  }
+
   return (
-    <AppBar component="nav">
+    <HeaderBar>
       <Container maxWidth={false}>
         <Toolbar disableGutters>
           <LogoComboMark>
@@ -26,9 +25,13 @@ const Header = () => {
           <ProfileMenu />
         </Toolbar>
       </Container>
-    </AppBar>
+    </HeaderBar>
   );
 };
+
+const HeaderBar = styled(AppBar)`
+  background-color: #0081bd;
+`;
 
 const LogoComboMark = styled.div`
   display: flex;

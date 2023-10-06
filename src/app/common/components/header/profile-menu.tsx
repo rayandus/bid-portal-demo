@@ -1,26 +1,34 @@
 import React, { useCallback, useState } from 'react';
 import styled from '@emotion/styled/macro';
 import { Avatar, Box, IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const SETTINGS = [
-  { id: 'create-new-item', label: 'Create New Item' },
-  { id: 'deposit', label: 'Deposit' },
-  { id: 'logout', label: 'Logout' },
+  { id: '/', label: 'Home' },
+  { id: '/create-bid-item', label: 'Create New Item' },
+  { id: '/deposit', label: 'Deposit' },
+  { id: '/logout', label: 'Logout' },
 ];
 
 const ProfileMenu = () => {
   const [anchorElUser, setAnchorElUser] = useState<HTMLElement>();
 
-  const path = window.location.pathname;
-  const page = path.substring(1);
+  const navigate = useNavigate();
+
+  const { pathname } = useLocation();
 
   const handleToggleMenu = useCallback((event: React.MouseEvent<HTMLElement>) => {
-    const target = event.currentTarget;
+    const target = event?.currentTarget;
 
     setAnchorElUser((prevState) => (!!prevState ? undefined : target));
   }, []);
 
-  const settings = SETTINGS.filter((setting) => setting.id !== page);
+  const handleRedirect = useCallback((path: string) => {
+    navigate(path);
+    setAnchorElUser(undefined);
+  }, [navigate]);
+
+  const settings = SETTINGS.filter((setting) => setting.id !== pathname);
 
   return (
     <ProfileMenuContainer>
@@ -28,8 +36,8 @@ const ProfileMenu = () => {
       <IconButton onClick={handleToggleMenu} sx={{ p: 0 }}>
         <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
       </IconButton>
-      <Menu
-        sx={{ mt: '45px' }}
+      <MenuList
+        className="helloWorld"
         id="menu-appbar"
         anchorEl={anchorElUser}
         anchorOrigin={{
@@ -45,11 +53,11 @@ const ProfileMenu = () => {
         onClose={handleToggleMenu}
       >
         {settings.map((setting) => (
-          <MenuItem key={setting.id} onClick={handleToggleMenu}>
+          <MenuItem key={setting.id} onClick={() => handleRedirect(setting.id)}>
             <Typography textAlign="center">{setting.label}</Typography>
           </MenuItem>
         ))}
-      </Menu>
+      </MenuList>
     </ProfileMenuContainer>
   );
 };
@@ -64,6 +72,14 @@ const ProfileMenuContainer = styled(Box)`
 const ProfileName = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md}px) {
     display: none;
+  }
+`;
+
+const MenuList = styled(Menu)`
+  top: 48px;
+
+  ul {
+    min-width: 200px;
   }
 `;
 

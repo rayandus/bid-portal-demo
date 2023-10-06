@@ -29,6 +29,8 @@ const TextFieldContainer = styled.div`
 const Label = styled.div`
   width: 100%;
   display: block;
+  color: rgba(0, 0, 0, 0.87);
+  margin-bottom: 5px;
 `;
 
 export default InputField;

@@ -1,26 +1,32 @@
 import React from 'react';
 import styled from '@emotion/styled/macro';
-import { Card, Container, Button, Link } from '@mui/material';
-import { InputField, Title } from '../common/components';
+import { Card, Button, Link } from '@mui/material';
+import { Container, InputField, Title } from '../common/components';
 
 const Login = () => {
   return (
-    <LoginContainer maxWidth="sm">
-      <LoginCard>
-        <Title>Login</Title>
-        <InputField title="Email" type="email" />
-        <InputField title="Password" type="password" />
-        <LoginButton variant="contained">Login</LoginButton>
-        <RegisterLink href="#" underline="always">
-          Register
-        </RegisterLink>
-      </LoginCard>
-    </LoginContainer>
+    <Background>
+      <Container maxWidth="sm">
+        <LoginCard>
+          <Title>Login</Title>
+          <InputField title="Email" type="email" />
+          <InputField title="Password" type="password" />
+          <LoginButton variant="contained">Login</LoginButton>
+          <RegisterLink href="#" underline="always">
+            Register
+          </RegisterLink>
+        </LoginCard>
+      </Container>
+    </Background>
   );
 };
 
-const LoginContainer = styled(Container)`
-  margin-top: 100px;
+const Background = styled.div`
+  margin: 0;
+  display: flex;
+  height: inherit;
+  width: inherit;
+  background-color: #003b57;
 `;
 
 const LoginCard = styled(Card)`
