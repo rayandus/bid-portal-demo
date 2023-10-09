@@ -1,13 +1,15 @@
-import React, { useCallback, useState } from 'react';
-import { InputAdornment } from '@mui/material';
+import React, { useCallback, useState, forwardRef } from 'react';
+import { InputAdornment, TextField } from '@mui/material';
 import InputField, { InputFieldProps } from './input-field';
 
 interface AmountFieldProps extends InputFieldProps {
   currencySymbol?: string;
+  onValidation?: (isError: boolean) => void;
 }
 
-const AmountField = (props: AmountFieldProps) => {
-  const { currencySymbol = '$' } = props;
+// TO DO: React.Ref<any>
+const AmountField = (props: AmountFieldProps, ref?: React.Ref<any>) => {
+  const { currencySymbol = '$', onValidation = () => {}, ...restProps } = props;
 
   const [isValid, setIsValid] = useState<boolean>(true);
 
@@ -15,12 +17,15 @@ const AmountField = (props: AmountFieldProps) => {
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const isValid = isValidAmount(e.target.value);
       setIsValid(isValid);
+
+      onValidation(!isValid);
     },
-    [],
+    [onValidation],
   );
 
   return (
-    <InputField
+    <TextField
+      ref={ref}
       onChange={handleChange}
       InputProps={{
         startAdornment: (
@@ -29,7 +34,7 @@ const AmountField = (props: AmountFieldProps) => {
       }}
       error={!isValid}
       helperText={isValid ? undefined : 'Invalid amount'}
-      {...props}
+      {...restProps}
     />
   );
 };
@@ -39,4 +44,4 @@ export const isValidAmount = (amount: string) => {
   return regex.test(amount);
 };
 
-export default AmountField;
+export default forwardRef(AmountField);

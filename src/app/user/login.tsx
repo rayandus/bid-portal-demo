@@ -1,20 +1,101 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import styled from '@emotion/styled/macro';
-import { Card, Button, Link } from '@mui/material';
-import { Container, InputField, Title } from '../common/components';
+import { Alert, Card, TextField } from '@mui/material';
+import { Container, Title, Button } from '../common/components';
+import { useAuthenticate } from './hooks';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+
+const validationSchema = yup.object({
+  email: yup.string().email('Invalid email').required('Email is required'),
+  password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+});
+
+interface LoginForm {
+  email: string;
+  password: string;
+}
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const { mutateAsync: authenticate, isSuccess, isLoading, error } = useAuthenticate();
+
+  const formik = useFormik<LoginForm>({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema: validationSchema,
+    validateOnChange: true,
+    validateOnBlur: true,
+    validateOnMount: true,
+    onSubmit: (values: LoginForm) => {
+      const { email, password } = values;
+      authenticate({ email, password });
+    },
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate('/');
+    }
+  }, [isSuccess, navigate]);
+
   return (
     <Background>
       <Container maxWidth="sm">
         <LoginCard>
           <Title>Login</Title>
-          <InputField title="Email" type="email" />
-          <InputField title="Password" type="password" />
-          <LoginButton variant="contained">Login</LoginButton>
-          <RegisterLink href="#" underline="always">
-            Register
-          </RegisterLink>
+          <Form onSubmit={formik.handleSubmit} noValidate autoComplete="off">
+            {error && <Alert severity="error">{error?.response.data.message}</Alert>}
+            <EmailInputField
+              fullWidth
+              size="small"
+              type="text"
+              name="email"
+              label="Email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            <TextField
+              fullWidth
+              size="small"
+              type="password"
+              name="password"
+              label="Password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            <Action>
+              <Button
+                variant="contained"
+                type="submit"
+                loading={isLoading}
+                startIcon={<></>}
+                loadingPosition="start"
+                width="60%"
+              >
+                Login
+              </Button>
+              <Link to="/register">
+                Register
+              </Link>
+            </Action>
+          </Form>
         </LoginCard>
       </Container>
     </Background>
@@ -39,13 +120,23 @@ const LoginCard = styled(Card)`
   }
 `;
 
-const LoginButton = styled(Button)`
-  margin: 30px auto;
-  width: 30%;
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
 `;
 
-const RegisterLink = styled(Link)`
-  margin: 0 auto;
+const EmailInputField = styled(TextField)`
+  input {
+    text-transform: lowercase;
+  }
+`;
+
+const Action = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
 `;
 
 export default Login;

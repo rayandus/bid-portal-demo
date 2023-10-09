@@ -2,8 +2,8 @@ import React from 'react';
 import styled from '@emotion/styled/macro';
 import { AppBar, Container, Toolbar } from '@mui/material';
 import AdbIcon from '@mui/icons-material/Adb';
-import ProfileMenu from './profile-menu';
 import { useLocation } from 'react-router-dom';
+import { ProfileMenu } from '../../../user-profile';
 
 const EXLCUDE_PAGES = ['/login', '/register'];
 

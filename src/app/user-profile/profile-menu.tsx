@@ -1,14 +1,10 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import styled from '@emotion/styled/macro';
 import { Avatar, Box, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
-
-const SETTINGS = [
-  { id: '/', label: 'Home' },
-  { id: '/create-bid-item', label: 'Create New Item' },
-  { id: '/deposit', label: 'Deposit' },
-  { id: '/logout', label: 'Logout' },
-];
+import { useAccountBalance, useUserProfile } from './hooks';
+import avatarProfile from '../../assets/avatar-profile.avif';
+import { formatAmount } from '../common/helpers';
 
 const ProfileMenu = () => {
   const [anchorElUser, setAnchorElUser] = useState<HTMLElement>();
@@ -16,6 +12,10 @@ const ProfileMenu = () => {
   const navigate = useNavigate();
 
   const { pathname } = useLocation();
+
+  const { data: userProfile } = useUserProfile();
+
+  const { data: accountBalance } = useAccountBalance();
 
   const handleToggleMenu = useCallback((event: React.MouseEvent<HTMLElement>) => {
     const target = event?.currentTarget;
@@ -28,13 +28,32 @@ const ProfileMenu = () => {
     setAnchorElUser(undefined);
   }, [navigate]);
 
-  const settings = SETTINGS.filter((setting) => setting.id !== pathname);
+  const handleLogout = useCallback(() => {
+    sessionStorage.removeItem('token');
+    navigate('/login');
+  }, [navigate]);
+
+  const menuSettings = [
+    { id: '/', label: 'Home', callback: handleRedirect },
+    { id: '/my-bid-items', label: 'My Bid Items', callback: handleRedirect },
+    { id: '/deposit', label: 'Deposit', callback: handleRedirect },
+    { id: '/logout', label: 'Logout', callback: handleLogout },
+  ];
+
+  const formattedBalance = useMemo(() => {
+    return accountBalance ? formatAmount({ value: accountBalance.amount }) : '';
+  }, [accountBalance]);
+
+  const settings = menuSettings.filter((setting) => setting.id !== pathname);
 
   return (
     <ProfileMenuContainer>
-      <ProfileName>Remy Sharp</ProfileName>
+      <ProfileQuickInfo>
+        <ProfileName>{userProfile?.email}</ProfileName>
+        <AccountBalance>Balance: {formattedBalance}</AccountBalance>
+      </ProfileQuickInfo>
       <IconButton onClick={handleToggleMenu} sx={{ p: 0 }}>
-        <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+        <Avatar alt={userProfile?.email} src={avatarProfile} />
       </IconButton>
       <MenuList
         className="helloWorld"
@@ -53,7 +72,7 @@ const ProfileMenu = () => {
         onClose={handleToggleMenu}
       >
         {settings.map((setting) => (
-          <MenuItem key={setting.id} onClick={() => handleRedirect(setting.id)}>
+          <MenuItem key={setting.id} onClick={() => setting.callback(setting.id)}>
             <Typography textAlign="center">{setting.label}</Typography>
           </MenuItem>
         ))}
@@ -69,10 +88,23 @@ const ProfileMenuContainer = styled(Box)`
   margin-left: auto;
 `;
 
-const ProfileName = styled.div`
+const ProfileQuickInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md}px) {
     display: none;
   }
+`;
+
+const ProfileName = styled.div`
+  font-weight: bold;
+  font-size: 14px;
+`;
+
+const AccountBalance = styled.div`
+  font-size: 12px;
 `;
 
 const MenuList = styled(Menu)`

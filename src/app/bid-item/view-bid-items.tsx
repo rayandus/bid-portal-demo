@@ -10,11 +10,32 @@ import {
   TableBody,
   TablePagination,
 } from '@mui/material';
-import { Button, Container } from '../common/components';
+import AddIcon from '@mui/icons-material/Add';
+import { BidExpiryDuration, Button, Container } from '../common/components';
+import { useBidItems } from './hooks';
+import { formatAmount } from '../common/helpers';
+import { useNavigate } from 'react-router-dom';
 
-const ViewBidItems = () => {
+export enum ViewBidItemsEnum {
+  ALL = 'all',
+  MANAGED = 'managed',
+}
+
+interface ViewBidItemsProps {
+  variant: ViewBidItemsEnum;
+}
+
+const ViewBidItems = (props: ViewBidItemsProps) => {
+  const { variant } = props;
+
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
+
+  const isManagedView = variant === ViewBidItemsEnum.MANAGED;
+
+  const { data: bidItems = [] } = useBidItems({ variant });
+
+  const navigate = useNavigate();
 
   const handlePageChange = useCallback(
     (_event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
@@ -23,20 +44,34 @@ const ViewBidItems = () => {
     [],
   );
 
-  const handleRowsPerPageChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const value = parseInt(event.target.value, 10);
-      setRowsPerPage(value);
-      setPage(0);
-    },
-    [],
-  );
+  const handleRowsPerPageChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(event.target.value, 10);
+    setRowsPerPage(value);
+    setPage(0);
+  }, []);
+
+  const handleCreateBidItem = useCallback(() => {
+    navigate('/create-bid-item');
+  }, [navigate]);
 
   return (
     <ViewBidItemsContainer maxWidth="md">
       <Action>
-        <Button variant="contained" width="20%" color="warning">Ongoing</Button>
-        <Button variant="contained" width="20%" color="success">Completed</Button>
+        {!isManagedView && (
+          <>
+            <Button variant="contained" width="20%" color="warning">
+              Ongoing
+            </Button>
+            <Button variant="contained" width="20%" color="success">
+              Completed
+            </Button>
+          </>
+        )}
+        {isManagedView && (
+          <Button variant="contained" startIcon={<AddIcon />} width="20%" onClick={handleCreateBidItem}>
+            Create Item
+          </Button>
+        )}
       </Action>
       <TableWrap>
         <Table>
@@ -45,33 +80,36 @@ const ViewBidItems = () => {
               <TableCell align="center">Name</TableCell>
               <TableCell align="center">Current Price</TableCell>
               <TableCell align="center">Duration</TableCell>
-              <TableCell align="center">Bid</TableCell>
+              {!isManagedView && <TableCell align="center">Bid</TableCell>}
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => (
-                <Row key={row.id}>
-                  <Cell component="th" scope="row">
-                    {row.name}
-                  </Cell>
-                  <Cell align="right">{row.currentPrice}</Cell>
-                  <Cell align="center">{row.duration}</Cell>
+            {bidItems.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item) => (
+              <Row key={item.id}>
+                <Cell component="th" scope="row">
+                  {item.name}
+                </Cell>
+                <Cell align="right">{formatAmount({ value: item.currentPrice })}</Cell>
+                <Cell align="center">
+                  <BidExpiryDuration {...item.currentExpiryDuration} />
+                </Cell>
+                {!isManagedView && (
                   <Cell align="center">
                     <Button variant="contained" size="small" width="100%">
                       Bid
                     </Button>
                   </Cell>
-                </Row>
-              ))}
+                )}
+              </Row>
+            ))}
           </TableBody>
         </Table>
       </TableWrap>
+      {/* TO DO: Server-side pagination */}
       <TablePagination
         rowsPerPageOptions={[5, 10, 25, 50, 100]}
         component="div"
-        count={rows.length}
+        count={bidItems.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handlePageChange}
@@ -106,24 +144,5 @@ const Row = styled(TableRow)`
 const Cell = styled(TableCell)`
   border: 0;
 `;
-
-const createData = (id: string, name: string, currentPrice: string, duration: string) => {
-  return { id, name, currentPrice, duration };
-};
-
-const rows = [
-  createData('1001', 'Item name 1', '$100.00', '1h3m'),
-  createData('1002', 'Item name 2', '$100.00', '1h3m'),
-  createData('1003', 'Item name 3', '$100.00', '1h3m'),
-  createData('1004', 'Item name 4', '$100.00', '1h3m'),
-  createData('1005', 'Item name 5', '$100.00', '1h3m'),
-  createData('1006', 'Item name 6', '$100.00', '1h3m'),
-  createData('1007', 'Item name 7', '$100.00', '1h3m'),
-  createData('1008', 'Item name 8', '$100.00', '1h3m'),
-  createData('1009', 'Item name 9', '$100.00', '1h3m'),
-  createData('1010', 'Item name 10', '$100.00', '1h3m'),
-  createData('1011', 'Item name 11', '$100.00', '1h3m'),
-  createData('1012', 'Item name 12', '$100.00', '1h3m'),
-];
 
 export default ViewBidItems;
