@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import styled from '@emotion/styled/macro';
 import {
-  Paper,
   TableContainer,
   Table,
   TableHead,
@@ -15,6 +14,7 @@ import { BidExpiryDuration, Button, Container } from '../common/components';
 import { useBidItems } from './hooks';
 import { formatAmount } from '../common/helpers';
 import { useNavigate } from 'react-router-dom';
+import PlaceBid from './place-bid';
 
 export enum ViewBidItemsEnum {
   ALL = 'all',
@@ -57,7 +57,7 @@ const ViewBidItems = (props: ViewBidItemsProps) => {
   return (
     <ViewBidItemsContainer maxWidth="md">
       <Action>
-        {!isManagedView && (
+        {/* {!isManagedView && (
           <>
             <Button variant="contained" width="20%" color="warning">
               Ongoing
@@ -66,7 +66,7 @@ const ViewBidItems = (props: ViewBidItemsProps) => {
               Completed
             </Button>
           </>
-        )}
+        )} */}
         {isManagedView && (
           <Button variant="contained" startIcon={<AddIcon />} width="20%" onClick={handleCreateBidItem}>
             Create Item
@@ -84,24 +84,26 @@ const ViewBidItems = (props: ViewBidItemsProps) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {bidItems.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item) => (
-              <Row key={item.id}>
-                <Cell component="th" scope="row">
-                  {item.name}
-                </Cell>
-                <Cell align="right">{formatAmount({ value: item.currentPrice })}</Cell>
-                <Cell align="center">
-                  <BidExpiryDuration {...item.currentExpiryDuration} />
-                </Cell>
-                {!isManagedView && (
-                  <Cell align="center">
-                    <Button variant="contained" size="small" width="100%">
-                      Bid
-                    </Button>
+            {bidItems.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item) => {
+              const { id, name, currentPrice, currentExpiryDuration } = item;
+
+              return (
+                <Row key={id}>
+                  <Cell component="th" scope="row">
+                    {name}
                   </Cell>
-                )}
-              </Row>
-            ))}
+                  <Cell align="right">{formatAmount({ value: currentPrice })}</Cell>
+                  <Cell align="center">
+                    <BidExpiryDuration {...currentExpiryDuration} />
+                  </Cell>
+                  {!isManagedView && (
+                    <Cell align="center">
+                      <PlaceBid bidItemName={name} bidItemId={id} bidItemStartingPrice={currentPrice} />
+                    </Cell>
+                  )}
+                </Row>
+              );
+            })}
           </TableBody>
         </Table>
       </TableWrap>
