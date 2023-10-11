@@ -1,27 +1,65 @@
-# React + TypeScript + Vite
+# Bid Port Demo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Bid Portal Demo is a web application that allows users to login, deposit funds, create bid items, and place bids on auctions. It connects to the Bid Admin API to save and retrieve bid data.
 
-Currently, two official plugins are available:
+## Prerequisite
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Node Version Manager (nvm)
+1. Pnpm
 
-## Expanding the ESLint configuration
+## Setup
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. Clone [bid-porta-demo](git@github.com:rayandus/bid-portal-demo.git) repo in your local
 
-- Configure the top-level `parserOptions` property like this:
+1. Go to project root directory and install
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+   ```bash
+   cd bid-portal-demo
+   git checkout main
+   nvm install
+   pnpm install
+   ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+1. Start the application
+
+   ```bash
+   pnpm start:dev
+   ```
+
+   > The app will run on port `5173`. E.g. `http://localhost:5173`
+
+   or
+
+   ```bash
+   pnpm start:dev -- --port 5173
+   ```
+
+   > Just replace `PORT=5173` to your choice of port
+
+1. Manually launch the app in your browser
+
+
+## Changing Currency
+
+As of this version, currency is fixed to USD. If you want to change it. Do the following:
+
+1. Create a `.env` in the root directory
+
+1. Add these variables
+
+  ```bash
+  VITE_LANGUAGE=en
+  VITE_CURRENCY=USD
+  ```
+
+  > Refernce on currency-based number formatting [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)
+
+## More about this project
+
+1. Built with ReactJs and TypeScript
+
+1. Material UI for the UI components
+
+1. Tanstack React Query for data synchronization
+
+1. Vite for the dev server and bundler

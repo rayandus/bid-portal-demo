@@ -11,7 +11,7 @@
     "format": "prettier --check './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "format:fix": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "preview": "vite preview",
-    "start": "npm run dev"
+    "start:dev": "npm run dev"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
