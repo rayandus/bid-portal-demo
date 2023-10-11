@@ -2,6 +2,27 @@
 
 Bid Portal Demo is a web application that allows users to login, deposit funds, create bid items, and place bids on auctions. It connects to the Bid Admin API to save and retrieve bid data.
 
+## Project Overview
+
+### Architecture
+
+- Architeture is discussed here (tbd)
+
+### Limitations
+
+- Limitations and to dos are discussed here (tbd)
+
+### Tests
+
+Currently, there are no tests available
+
+    ❌ Unit Tests (Partial)
+
+    ❌ Component Tests
+
+    ❌ E2E Tests
+
+
 ## Prerequisite
 
 1. Node Version Manager (nvm)
