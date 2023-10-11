@@ -8,7 +8,7 @@ Try out the [demo here](https://bidportaldemo.z31.web.core.windows.net/). Please
 
 ### Architecture
 
-- 📝 Architeture is discussed here (tbd)
+- 📝 Architecture is discussed here (tbd)
 
 ### Limitations
 
@@ -18,7 +18,7 @@ Try out the [demo here](https://bidportaldemo.z31.web.core.windows.net/). Please
 
 Currently, there are no tests available
 
-    ❌ Unit Tests (Partial)
+    ❌ Unit Tests
 
     ❌ Component Tests
 
@@ -63,6 +63,8 @@ Currently, there are no tests available
    > Just replace `PORT=5173` to your choice of port
 
 ## Validate the App
+
+ > ⚠️ Prerequisite: Bid Admin API is up and running
 
 1. Manually launch the app in your browser
 
