@@ -1,18 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Routes, RoutesProps, useNavigate } from 'react-router-dom';
 
 interface ProtectedRouteProps extends RoutesProps {}
 
 const ProtectedRoutes = (props: ProtectedRouteProps) => {
-    const { ...routeProps } = props;
+  const { ...routeProps } = props;
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    navigate('/login');
+  navigate('/login');
 
-    return (
-        <Routes {...routeProps} />
-    );
+  return <Routes {...routeProps} />;
 };
 
 export default ProtectedRoutes;

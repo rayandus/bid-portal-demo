@@ -2,29 +2,27 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface ProtectedRouteProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 const ProtectedComponent = (props: ProtectedRouteProps) => {
-    const { children } = props;
+  const { children } = props;
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const token = sessionStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
 
-    useEffect(() => {
-        if (!token) {
-            navigate('/login');
-        }
-    }, [navigate, token])
-
+  useEffect(() => {
     if (!token) {
-        return null;
+      navigate('/login');
     }
+  }, [navigate, token]);
 
-    return (
-        <>{children}</>
-    );
+  if (!token) {
+    return null;
+  }
+
+  return <>{children}</>;
 };
 
 export default ProtectedComponent;

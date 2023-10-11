@@ -63,13 +63,13 @@ Currently, there are no tests available
 1. Manually launch the app in your browser
 
 
-## Changing Currency
+## Other Configurations
 
-As of this version, currency is fixed to USD. If you want to change it. Do the following:
+You can override the following:
 
 1. Create a `.env` in the root directory
 
-1. Add these variables
+1. Change currency
 
   ```bash
   VITE_LANGUAGE=en
@@ -77,6 +77,12 @@ As of this version, currency is fixed to USD. If you want to change it. Do the f
   ```
 
   > Refernce on currency-based number formatting [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)
+
+1. Change the endpoint url
+
+  ```bash
+  VITE_API_ENDPOINT=http://localhost:1234/api
+  ```
 
 ## More about this project
 

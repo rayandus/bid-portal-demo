@@ -1,6 +1,8 @@
-import { useMutation, UseMutationResult, useQueryClient } from '@tanstack/react-query';
+import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { Token } from '../types';
 import { ApiError, useApiService } from '../../common/providers/api-service-provider';
+
+// TO DO: Separate login and auth from user
 
 interface UseAuthenticateVariables {
   email: string;

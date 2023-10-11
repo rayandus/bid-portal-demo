@@ -1,8 +1,6 @@
 const queryKeys = {
   getBidItems: () => {
-    return [
-      'get-bid-items',
-    ];
+    return ['get-bid-items'];
   },
 };
 

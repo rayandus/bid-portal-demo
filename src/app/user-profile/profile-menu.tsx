@@ -20,13 +20,16 @@ const ProfileMenu = () => {
   const handleToggleMenu = useCallback((event: React.MouseEvent<HTMLElement>) => {
     const target = event?.currentTarget;
 
-    setAnchorElUser((prevState) => (!!prevState ? undefined : target));
+    setAnchorElUser((prevState) => (prevState ? undefined : target));
   }, []);
 
-  const handleRedirect = useCallback((path: string) => {
-    navigate(path);
-    setAnchorElUser(undefined);
-  }, [navigate]);
+  const handleRedirect = useCallback(
+    (path: string) => {
+      navigate(path);
+      setAnchorElUser(undefined);
+    },
+    [navigate],
+  );
 
   const handleLogout = useCallback(() => {
     sessionStorage.removeItem('token');

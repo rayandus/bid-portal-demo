@@ -15,11 +15,7 @@ export default defineConfig({
       jsxRuntime: 'automatic',
       jsxImportSource: '@emotion/react',
       babel: {
-        plugins: [
-          'babel-plugin-graphql-tag',
-          'babel-plugin-macros',
-          ['@emotion/babel-plugin', {}],
-        ],
+        plugins: ['babel-plugin-graphql-tag', 'babel-plugin-macros', ['@emotion/babel-plugin', {}]],
       },
     }),
   ],

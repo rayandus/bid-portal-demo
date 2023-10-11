@@ -1,13 +1,9 @@
 const queryKeys = {
   getUserProfile: () => {
-    return [
-      'get-user-profile',
-    ];
+    return ['get-user-profile'];
   },
   getAccountBalance: () => {
-    return [
-      'get-account-balance',
-    ];
+    return ['get-account-balance'];
   },
 };
 

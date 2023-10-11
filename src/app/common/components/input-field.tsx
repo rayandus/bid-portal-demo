@@ -3,8 +3,8 @@ import styled from '@emotion/styled/macro';
 import { TextField } from '@mui/material';
 
 export interface InputFieldProps extends ComponentProps<typeof TextField> {
-    className?: string;
-    title?: string;
+  className?: string;
+  title?: string;
 }
 
 const InputField = (props: InputFieldProps, ref?: React.Ref<HTMLInputElement>) => {
@@ -13,13 +13,7 @@ const InputField = (props: InputFieldProps, ref?: React.Ref<HTMLInputElement>) =
   return (
     <TextFieldContainer className={className}>
       {title && <Label>{title}</Label>}
-      <TextField
-        inputRef={ref}
-        fullWidth
-        size="small"
-        type="text"
-        {...restProps}
-      />
+      <TextField inputRef={ref} fullWidth size="small" type="text" {...restProps} />
     </TextFieldContainer>
   );
 };

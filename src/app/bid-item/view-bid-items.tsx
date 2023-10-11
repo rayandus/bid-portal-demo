@@ -1,14 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import styled from '@emotion/styled/macro';
-import {
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  TablePagination,
-} from '@mui/material';
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TablePagination } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { BidExpiryDuration, Button, Container } from '../common/components';
 import { useBidItems } from './hooks';

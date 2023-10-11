@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import styled from '@emotion/styled/macro';
 import { Alert, Card, TextField } from '@mui/material';
@@ -6,6 +6,8 @@ import { Container, Title, Button } from '../common/components';
 import { useAuthenticate } from './hooks';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+
+// TO DO: Separate login and auth from user
 
 const validationSchema = yup.object({
   email: yup.string().email('Invalid email').required('Email is required'),
@@ -91,9 +93,7 @@ const Login = () => {
               >
                 Login
               </Button>
-              <Link to="/register">
-                Register
-              </Link>
+              <Link to="/register">Register</Link>
             </Action>
           </Form>
         </LoginCard>

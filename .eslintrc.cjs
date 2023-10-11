@@ -16,5 +16,8 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    '@typescript-eslint/no-unused-vars': 'off',
+    // TO DO: Review this rule if it affects vite hot reload
+    'react-refresh/only-export-components': 'off',
   },
 }

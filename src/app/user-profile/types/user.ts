@@ -1,4 +1,4 @@
 export interface User {
-    email: string;
-    isLoggedIn: true,
+  email: string;
+  isLoggedIn: true;
 }

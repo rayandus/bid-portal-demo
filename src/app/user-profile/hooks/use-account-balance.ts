@@ -7,25 +7,21 @@ import { AccountBalance } from '../types';
 type UseAccountBalanceResponse = UseQueryResult<AccountBalance, ApiError>;
 
 const useAccountBalance = (): UseAccountBalanceResponse => {
-    const { axiosInstance } = useApiService();
+  const { axiosInstance } = useApiService();
 
-    const fetch = useCallback(async () => {
-        const response = await axiosInstance.get<AccountBalance>('/account/balance');
+  const fetch = useCallback(async () => {
+    const response = await axiosInstance.get<AccountBalance>('/account/balance');
 
-        return response.data;
-    }, []);
+    return response.data;
+  }, [axiosInstance]);
 
-    const result = useQuery(
-        queryKeys.getAccountBalance(),
-        () => fetch(),
-        {
-            refetchOnWindowFocus: false,
-            keepPreviousData: true,
-            onError: (_error: ApiError) => {},
-        }
-    );
+  const result = useQuery(queryKeys.getAccountBalance(), () => fetch(), {
+    refetchOnWindowFocus: false,
+    keepPreviousData: true,
+    onError: (_error: ApiError) => {},
+  });
 
-    return result;
+  return result;
 };
 
 export default useAccountBalance;

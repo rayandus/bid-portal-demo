@@ -2,9 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled/macro';
 import { Alert, TextField, InputAdornment } from '@mui/material';
-import { AmountField, Title, Container, ExpiryDuration, Button } from '../common/components';
+import { AmountField, Title, Container, ExpiryDuration, Button, TimeWindow } from '../common/components';
 import { useCreateBidItem } from './hooks';
-import TimeWindow from '../common/components/time-window';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 

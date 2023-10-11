@@ -7,25 +7,21 @@ import { User } from '../types';
 type UseUserProfileResponse = UseQueryResult<User, ApiError>;
 
 const useUserProfile = (): UseUserProfileResponse => {
-    const { axiosInstance } = useApiService();
+  const { axiosInstance } = useApiService();
 
-    const fetch = useCallback(async () => {
-        const response = await axiosInstance.get<User>('/user/me');
+  const fetch = useCallback(async () => {
+    const response = await axiosInstance.get<User>('/user/me');
 
-        return response.data;
-    }, []);
+    return response.data;
+  }, [axiosInstance]);
 
-    const result = useQuery(
-        queryKeys.getUserProfile(),
-        () => fetch(),
-        {
-            refetchOnWindowFocus: false,
-            keepPreviousData: true,
-            onError: (_error: ApiError) => {},
-        }
-    );
+  const result = useQuery(queryKeys.getUserProfile(), () => fetch(), {
+    refetchOnWindowFocus: false,
+    keepPreviousData: true,
+    onError: (_error: ApiError) => {},
+  });
 
-    return result;
+  return result;
 };
 
 export default useUserProfile;

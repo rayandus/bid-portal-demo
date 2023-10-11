@@ -10,7 +10,7 @@ const App = () => {
   return (
     <BrowserRouter>
       {/* <ProtectedComponent> */}
-        <Header />
+      <Header />
       {/* </ProtectedComponent> */}
       <Routes>
         <Route path="/login" element={<Login />} />

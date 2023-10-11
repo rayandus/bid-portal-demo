@@ -19,7 +19,7 @@ interface DepositForm {
 const Deposit = () => {
   const [amount, setAmount] = useState<number>();
 
-  const { mutateAsync: deposit, isLoading, isSuccess, data, error, reset } = useDeposit();
+  const { mutateAsync: deposit, isLoading, isSuccess, error, reset } = useDeposit();
 
   const navigate = useNavigate();
 

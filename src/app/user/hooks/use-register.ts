@@ -9,7 +9,7 @@ interface UseRegisterVariables {
 
 type UseRegisterResponse = UseMutationResult<User, ApiError, UseRegisterVariables>;
 
-const use = (): UseRegisterResponse => {
+const useRegister = (): UseRegisterResponse => {
   const apiService = useApiService();
 
   const result = useMutation(
@@ -31,4 +31,4 @@ const use = (): UseRegisterResponse => {
   return { ...result };
 };
 
-export default use;
+export default useRegister;

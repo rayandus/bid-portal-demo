@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from '@emotion/styled/macro';
 import { Alert, Card, TextField } from '@mui/material';
 import { Button, Container, Title } from '../common/components';
@@ -39,7 +39,7 @@ const Register = () => {
     if (isSuccess) {
       formik.resetForm();
     }
-  }, [isSuccess]);
+  }, [isSuccess, formik]);
 
   return (
     <Background>
@@ -96,9 +96,7 @@ const Register = () => {
               >
                 Register
               </Button>
-              <Link to="/login">
-                Login
-              </Link>
+              <Link to="/login">Login</Link>
             </Action>
           </Form>
         </RegisterCard>
