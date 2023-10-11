@@ -22,6 +22,9 @@ Currently, there are no tests available
 
     ❌ E2E Tests
 
+### CICD
+
+- Currently, CICD has not been set-up
 
 ## Prerequisite
 
