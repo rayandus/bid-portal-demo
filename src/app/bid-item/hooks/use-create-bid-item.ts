@@ -4,6 +4,7 @@ import { ApiError, useApiService } from '../../common/providers/api-service-prov
 import bidItemQueryKeys from './query-keys';
 import { ExpiryDuration } from '../../common/components';
 import { BidItem } from '../types';
+import { ViewBidItemsEnum } from '../view-bid-items';
 
 interface UseCreateBidItemVariables {
   name: string;
@@ -16,7 +17,11 @@ interface UseCreateBidItemProps {
   canInvalidateQueries?: boolean;
 }
 
-type UseCreateBidItemResponse = UseMutationResult<BidItem, ApiError, UseCreateBidItemVariables>;
+type UseCreateBidItemResponse = UseMutationResult<
+  BidItem,
+  ApiError,
+  UseCreateBidItemVariables
+>;
 
 const useCreateBidItem = (props?: UseCreateBidItemProps): UseCreateBidItemResponse => {
   const { canInvalidateQueries = true } = props || {};
@@ -27,7 +32,10 @@ const useCreateBidItem = (props?: UseCreateBidItemProps): UseCreateBidItemRespon
 
   const result = useMutation(
     async (variables: UseCreateBidItemVariables) => {
-      const response = await apiService.axiosInstance.post<BidItem>('/bid-item', variables);
+      const response = await apiService.axiosInstance.post<BidItem>(
+        '/bid-item',
+        variables,
+      );
 
       return response.data;
     },
@@ -42,9 +50,13 @@ const useCreateBidItem = (props?: UseCreateBidItemProps): UseCreateBidItemRespon
   );
 
   const invalidateQueries = useCallback(async (): Promise<void> => {
-    const key = bidItemQueryKeys.getBidItems();
+    const keyViewManagedBidItems = bidItemQueryKeys.getBidItems(ViewBidItemsEnum.MANAGED);
+    const keyViewAllKeyBidItems = bidItemQueryKeys.getBidItems(ViewBidItemsEnum.ALL);
 
-    await queryClient.invalidateQueries(key);
+    Promise.allSettled([
+      queryClient.invalidateQueries(keyViewManagedBidItems),
+      queryClient.invalidateQueries(keyViewAllKeyBidItems),
+    ]);
   }, [queryClient]);
 
   return { ...result };

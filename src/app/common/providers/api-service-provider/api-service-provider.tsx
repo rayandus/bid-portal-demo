@@ -11,7 +11,9 @@ interface ApiServiceProviderProps {
 const ApiServiceProvider = (props: ApiServiceProviderProps) => {
   const { children, service } = props;
 
-  return <ApiServiceContext.Provider value={service}>{children}</ApiServiceContext.Provider>;
+  return (
+    <ApiServiceContext.Provider value={service}>{children}</ApiServiceContext.Provider>
+  );
 };
 
 export const useApiService = (): ApiService => {

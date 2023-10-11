@@ -9,7 +9,10 @@ import { useRegister } from './hooks';
 
 const validationSchema = yup.object({
   email: yup.string().email('Invalid email').required('Email is required'),
-  password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+  password: yup
+    .string()
+    .min(8, 'Password must be at least 8 characters')
+    .required('Password is required'),
 });
 
 interface RegisterForm {
@@ -18,7 +21,14 @@ interface RegisterForm {
 }
 
 const Register = () => {
-  const { mutateAsync: register, isLoading, isSuccess, error, data, reset } = useRegister();
+  const {
+    mutateAsync: register,
+    isLoading,
+    isSuccess,
+    error,
+    data,
+    reset,
+  } = useRegister();
 
   const formik = useFormik<RegisterForm>({
     initialValues: {
@@ -53,7 +63,9 @@ const Register = () => {
             noValidate
             autoComplete="off"
           >
-            {isSuccess && <Alert severity="success">Successfully registered {data.email}</Alert>}
+            {isSuccess && (
+              <Alert severity="success">Successfully registered {data.email}</Alert>
+            )}
             {error && <Alert severity="error">{error?.response.data.message}</Alert>}
             <EmailInputField
               fullWidth

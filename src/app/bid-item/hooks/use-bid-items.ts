@@ -24,9 +24,10 @@ const useBidItems = (props: UseBidItemsProps): UseBidItemsResponse => {
     return response.data;
   }, [axiosInstance, variant]);
 
-  const result = useQuery(queryKeys.getBidItems(), () => fetch(), {
+  const result = useQuery(queryKeys.getBidItems(variant), () => fetch(), {
     refetchOnWindowFocus: false,
-    keepPreviousData: true,
+    // TO DO: Just separate view bid items for all and user-managed, so we can leverage keepPreviousData: true
+    keepPreviousData: false,
     onError: (_error: ApiError) => {},
   });
 

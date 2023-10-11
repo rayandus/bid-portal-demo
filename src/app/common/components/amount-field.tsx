@@ -27,7 +27,9 @@ const AmountField = (props: AmountFieldProps, ref?: React.Ref<HTMLInputElement>)
       ref={ref}
       onChange={handleChange}
       InputProps={{
-        startAdornment: <InputAdornment position="start">{currencySymbol}</InputAdornment>,
+        startAdornment: (
+          <InputAdornment position="start">{currencySymbol}</InputAdornment>
+        ),
       }}
       error={!isValid}
       helperText={isValid ? undefined : 'Invalid amount'}

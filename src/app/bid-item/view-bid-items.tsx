@@ -1,6 +1,14 @@
 import React, { useCallback, useState } from 'react';
 import styled from '@emotion/styled/macro';
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TablePagination } from '@mui/material';
+import {
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  TablePagination,
+} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { BidExpiryDuration, Button, Container } from '../common/components';
 import { useBidItems } from './hooks';
@@ -36,11 +44,14 @@ const ViewBidItems = (props: ViewBidItemsProps) => {
     [],
   );
 
-  const handleRowsPerPageChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(event.target.value, 10);
-    setRowsPerPage(value);
-    setPage(0);
-  }, []);
+  const handleRowsPerPageChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const value = parseInt(event.target.value, 10);
+      setRowsPerPage(value);
+      setPage(0);
+    },
+    [],
+  );
 
   const handleCreateBidItem = useCallback(() => {
     navigate('/create-bid-item');
@@ -60,7 +71,12 @@ const ViewBidItems = (props: ViewBidItemsProps) => {
           </>
         )} */}
         {isManagedView && (
-          <Button variant="contained" startIcon={<AddIcon />} width="20%" onClick={handleCreateBidItem}>
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            width="20%"
+            onClick={handleCreateBidItem}
+          >
             Create Item
           </Button>
         )}
@@ -76,26 +92,32 @@ const ViewBidItems = (props: ViewBidItemsProps) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {bidItems.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item) => {
-              const { id, name, currentPrice, currentExpiryDuration } = item;
+            {bidItems
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((item) => {
+                const { id, name, currentPrice, currentExpiryDuration } = item;
 
-              return (
-                <Row key={id}>
-                  <Cell component="th" scope="row">
-                    {name}
-                  </Cell>
-                  <Cell align="right">{formatAmount({ value: currentPrice })}</Cell>
-                  <Cell align="center">
-                    <BidExpiryDuration {...currentExpiryDuration} />
-                  </Cell>
-                  {!isManagedView && (
-                    <Cell align="center">
-                      <PlaceBid bidItemName={name} bidItemId={id} bidItemStartingPrice={currentPrice} />
+                return (
+                  <Row key={id}>
+                    <Cell component="th" scope="row">
+                      {name}
                     </Cell>
-                  )}
-                </Row>
-              );
-            })}
+                    <Cell align="right">{formatAmount({ value: currentPrice })}</Cell>
+                    <Cell align="center">
+                      <BidExpiryDuration {...currentExpiryDuration} />
+                    </Cell>
+                    {!isManagedView && (
+                      <Cell align="center">
+                        <PlaceBid
+                          bidItemName={name}
+                          bidItemId={id}
+                          bidItemStartingPrice={currentPrice}
+                        />
+                      </Cell>
+                    )}
+                  </Row>
+                );
+              })}
           </TableBody>
         </Table>
       </TableWrap>

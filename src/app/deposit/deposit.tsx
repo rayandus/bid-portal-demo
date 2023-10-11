@@ -9,7 +9,10 @@ import * as yup from 'yup';
 import { formatAmount } from '../common/helpers';
 
 const validationSchema = yup.object({
-  amount: yup.number().min(1, 'Starting price minimum is 1').required('Starting price is required'),
+  amount: yup
+    .number()
+    .min(1, 'Starting price minimum is 1')
+    .required('Starting price is required'),
 });
 
 interface DepositForm {
@@ -64,7 +67,9 @@ const Deposit = () => {
           noValidate
           autoComplete="off"
         >
-          {isSuccess && <Alert severity="success">Successfully deposited: {formattedAmount}</Alert>}
+          {isSuccess && (
+            <Alert severity="success">Successfully deposited: {formattedAmount}</Alert>
+          )}
           {error && <Alert severity="error">{error?.response.data.message}</Alert>}
           <AmountField
             fullWidth
@@ -85,10 +90,21 @@ const Deposit = () => {
             }}
           />
           <Action>
-            <Button variant="contained" color="error" disabled={isLoading} onClick={handleCancel}>
+            <Button
+              variant="contained"
+              color="error"
+              disabled={isLoading}
+              onClick={handleCancel}
+            >
               Cancel
             </Button>
-            <Button type="submit" variant="contained" loading={isLoading} startIcon={<></>} loadingPosition="start">
+            <Button
+              type="submit"
+              variant="contained"
+              loading={isLoading}
+              startIcon={<></>}
+              loadingPosition="start"
+            >
               Deposit
             </Button>
           </Action>

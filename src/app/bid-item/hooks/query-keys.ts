@@ -1,6 +1,8 @@
+import { ViewBidItemsEnum } from '../view-bid-items';
+
 const queryKeys = {
-  getBidItems: () => {
-    return ['get-bid-items'];
+  getBidItems: (variant: ViewBidItemsEnum) => {
+    return ['get-bid-items', variant];
   },
 };
 

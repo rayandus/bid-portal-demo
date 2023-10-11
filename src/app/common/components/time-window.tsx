@@ -22,29 +22,39 @@ const TimeWindow = (props: TimeWindowProps) => {
 
   const [data, setData] = useState<TimeWindowResult>({ days: 0, hours: 0, minutes: 0 });
 
-  const handleDaysChange = useCallback((event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const value = parseInt(event.target.value, 10);
+  const handleDaysChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const value = parseInt(event.target.value, 10);
 
-    const updatedValue = value >= daysRange.min && value <= daysRange.max ? value : 0;
+      const updatedValue = value >= daysRange.min && value <= daysRange.max ? value : 0;
 
-    setData((prevState) => ({ ...prevState, days: updatedValue }));
-  }, []);
+      setData((prevState) => ({ ...prevState, days: updatedValue }));
+    },
+    [],
+  );
 
-  const handleHoursChange = useCallback((event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const value = parseInt(event.target.value, 10);
+  const handleHoursChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const value = parseInt(event.target.value, 10);
 
-    const updatedValue = value >= hoursRange.min && value <= hoursRange.max ? value : 0;
+      const updatedValue = value >= hoursRange.min && value <= hoursRange.max ? value : 0;
 
-    setData((prevState) => ({ ...prevState, hours: updatedValue }));
-  }, []);
+      setData((prevState) => ({ ...prevState, hours: updatedValue }));
+    },
+    [],
+  );
 
-  const handleMinutesChange = useCallback((event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const value = parseInt(event.target.value, 10);
+  const handleMinutesChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const value = parseInt(event.target.value, 10);
 
-    const updatedValue = value >= minutesRange.min && value <= minutesRange.max ? value : 0;
+      const updatedValue =
+        value >= minutesRange.min && value <= minutesRange.max ? value : 0;
 
-    setData((prevState) => ({ ...prevState, minutes: updatedValue }));
-  }, []);
+      setData((prevState) => ({ ...prevState, minutes: updatedValue }));
+    },
+    [],
+  );
 
   useEffect(() => {
     if (data) {

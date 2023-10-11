@@ -62,7 +62,6 @@ Currently, there are no tests available
 
 1. Manually launch the app in your browser
 
-
 ## Other Configurations
 
 You can override the following:
@@ -71,18 +70,18 @@ You can override the following:
 
 1. Change currency
 
-  ```bash
-  VITE_LANGUAGE=en
-  VITE_CURRENCY=USD
-  ```
+```bash
+VITE_LANGUAGE=en
+VITE_CURRENCY=USD
+```
 
-  > Refernce on currency-based number formatting [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)
+> Refernce on currency-based number formatting [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)
 
 1. Change the endpoint url
 
-  ```bash
-  VITE_API_ENDPOINT=http://localhost:1234/api
-  ```
+```bash
+VITE_API_ENDPOINT=http://localhost:1234/api
+```
 
 ## More about this project
 

@@ -1,6 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from '@emotion/styled/macro';
-import { Alert, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, InputAdornment } from '@mui/material';
+import {
+  Alert,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  InputAdornment,
+} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { AmountField, Button } from '../common/components';
 import { useFormik } from 'formik';
@@ -31,7 +39,10 @@ const PlaceBid = (props: PlaceBidProps) => {
     return yup.object({
       amount: yup
         .number()
-        .moreThan(bidItemStartingPrice, `Bid amount should be more than ${formattedStartingPrice}`)
+        .moreThan(
+          bidItemStartingPrice,
+          `Bid amount should be more than ${formattedStartingPrice}`,
+        )
         .required('Starting price is required'),
     });
   }, [bidItemStartingPrice]);
@@ -88,7 +99,11 @@ const PlaceBid = (props: PlaceBidProps) => {
             noValidate
             autoComplete="off"
           >
-            {isSuccess && <Alert severity="success">Successfully placed bid. You are now the highest bidder.</Alert>}
+            {isSuccess && (
+              <Alert severity="success">
+                Successfully placed bid. You are now the highest bidder.
+              </Alert>
+            )}
             {error && <Alert severity="error">{error?.response.data.message}</Alert>}
             <AmountField
               fullWidth
@@ -111,7 +126,13 @@ const PlaceBid = (props: PlaceBidProps) => {
           </Form>
         </DialogContent>
         <DialogActionsStyled>
-          <Button variant="contained" color="error" width="30%" disabled={isLoading} onClick={handleClose}>
+          <Button
+            variant="contained"
+            color="error"
+            width="30%"
+            disabled={isLoading}
+            onClick={handleClose}
+          >
             Cancel
           </Button>
           <Button

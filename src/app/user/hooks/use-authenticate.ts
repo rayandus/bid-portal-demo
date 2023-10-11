@@ -9,7 +9,11 @@ interface UseAuthenticateVariables {
   password: string;
 }
 
-type UseAuthenticateResponse = UseMutationResult<Token, ApiError, UseAuthenticateVariables>;
+type UseAuthenticateResponse = UseMutationResult<
+  Token,
+  ApiError,
+  UseAuthenticateVariables
+>;
 
 const useAuthenticate = (): UseAuthenticateResponse => {
   const apiService = useApiService();

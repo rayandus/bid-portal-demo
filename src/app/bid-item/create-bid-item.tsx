@@ -2,7 +2,14 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled/macro';
 import { Alert, TextField, InputAdornment } from '@mui/material';
-import { AmountField, Title, Container, ExpiryDuration, Button, TimeWindow } from '../common/components';
+import {
+  AmountField,
+  Title,
+  Container,
+  ExpiryDuration,
+  Button,
+  TimeWindow,
+} from '../common/components';
 import { useCreateBidItem } from './hooks';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -13,7 +20,10 @@ const validationSchema = yup.object({
     .min(3, 'Name should be of minimum 3 characters in length')
     .max(50, 'Name should be of maximum 100 characters in length')
     .required('Name is required'),
-  startPrice: yup.number().min(1, 'Starting price minimum is 1').required('Starting price is required'),
+  startPrice: yup
+    .number()
+    .min(1, 'Starting price minimum is 1')
+    .required('Starting price is required'),
 });
 
 interface BidItemForm {
@@ -24,7 +34,13 @@ interface BidItemForm {
 const CreateBidItem = () => {
   const [expiryDuration, setExpiryDuration] = useState<ExpiryDuration>();
 
-  const { mutateAsync: createBidItem, isLoading, isSuccess, error, reset } = useCreateBidItem();
+  const {
+    mutateAsync: createBidItem,
+    isLoading,
+    isSuccess,
+    error,
+    reset,
+  } = useCreateBidItem();
 
   const navigate = useNavigate();
 
@@ -59,7 +75,10 @@ const CreateBidItem = () => {
     navigate(-1);
   }, [navigate]);
 
-  const handleExpiryDuration = useCallback((data: ExpiryDuration) => setExpiryDuration(data), []);
+  const handleExpiryDuration = useCallback(
+    (data: ExpiryDuration) => setExpiryDuration(data),
+    [],
+  );
 
   return (
     <>
@@ -109,7 +128,12 @@ const CreateBidItem = () => {
           />
           <TimeWindowStyled onChange={handleExpiryDuration} />
           <Action>
-            <CancelButton variant="contained" color="error" disabled={isLoading} onClick={handleCancel}>
+            <CancelButton
+              variant="contained"
+              color="error"
+              disabled={isLoading}
+              onClick={handleCancel}
+            >
               Cancel
             </CancelButton>
             <CreateButton
