@@ -60,7 +60,13 @@ Currently, there are no tests available
 
    > Just replace `PORT=5173` to your choice of port
 
+## Validate the App
+
 1. Manually launch the app in your browser
+
+1. Register a user
+
+1. Login the user
 
 ## Other Configurations
 
