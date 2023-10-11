@@ -2,15 +2,17 @@
 
 Bid Portal Demo is a web application that allows users to login, deposit funds, create bid items, and place bids on auctions. It connects to the Bid Admin API to save and retrieve bid data.
 
+Try out the [demo here](https://bid-admin-api-demo-prod.azurewebsites.net/). Please register a user, then log in.
+
 ## Project Overview
 
 ### Architecture
 
-- Architeture is discussed here (tbd)
+- 📝 Architeture is discussed here (tbd)
 
 ### Limitations
 
-- Limitations and to dos are discussed here (tbd)
+- 📝 Limitations and to dos are discussed here (tbd)
 
 ### Tests
 
@@ -24,7 +26,7 @@ Currently, there are no tests available
 
 ### CICD
 
-- Currently, CICD has not been set-up
+- 📝 Currently, CICD has not been set-up
 
 ## Prerequisite
 
