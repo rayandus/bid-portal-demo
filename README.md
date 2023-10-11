@@ -9,7 +9,7 @@ Bid Portal Demo is a web application that allows users to login, deposit funds, 
 
 ## Setup
 
-1. Clone [bid-porta-demo](git@github.com:rayandus/bid-portal-demo.git) repo in your local
+1. Clone [bid-portal-demo](https://github.com/rayandus/bid-portal-demo) repo in your local
 
 1. Go to project root directory and install
 
