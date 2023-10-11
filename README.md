@@ -6,27 +6,8 @@ Try out the [demo here](https://bidportaldemo.z31.web.core.windows.net/). Please
 
 ## Project Overview
 
-### Architecture
+For more details on the architecture, authentication flow, plans or to do's, please check [here](https://rma-demo.notion.site/Bid-Demo-Project-9cf3e25d70e44f4b868499aeb89fd81a)
 
-- 📝 Architecture is discussed here (tbd)
-
-### Limitations
-
-- 📝 Limitations and to dos are discussed here (tbd)
-
-### Tests
-
-Currently, there are no tests available
-
-    ❌ Unit Tests
-
-    ❌ Component Tests
-
-    ❌ E2E Tests
-
-### CICD
-
-- 📝 Currently, CICD has not been set-up
 
 ## Prerequisite
 
