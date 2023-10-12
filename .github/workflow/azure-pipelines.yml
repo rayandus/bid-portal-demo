@@ -15,15 +15,16 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  NODE_RELEASE: '18.x'
-  IS_DEV_BRANCH: $[eq(variables['Build.SourceBranch'], 'refs/heads/dev')]
+  nodeVersion: '18.x'
+  isDevBranch: $[eq(variables['Build.SourceBranch'], 'refs/heads/dev')]
+  artifactName: $[ if(variables['isDevBranch']) { 'bid-portal-demo-artifact-dev' } else { 'bid-portal-demo-artifact' } ]
 
 steps:
 # Use Node version 18.x
 - task: NodeTool@0
   inputs:
-    versionSpec: $(NODE_RELEASE)
-  displayName: 'Use Node.js $(NODE_RELEASE)'
+    versionSpec: $(nodeVersion)
+  displayName: 'Use Node.js $(nodeVersion)'
 
 # Use pnpm (much faster)
 - script: |
@@ -50,7 +51,7 @@ steps:
   inputs:
     # dist folder only. We don't need the rest of the files
     pathtoPublish: 'dist'
-    artifactName: 'bid-portal-demo-artifact'
+    artifactName: ${artifactName}
     publishLocation: 'Container'
   # Exclude PRs from creating an artifact
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['IS_DEV_BRANCH'], true))
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['isDevBranch'], true))
