@@ -17,10 +17,9 @@ pool:
 variables:
   nodeVersion: '18.x'
   isDevBranch: $[eq(variables['Build.SourceBranch'], 'refs/heads/dev')]
-  artifactName: $[ if(variables['isDevBranch']) { 'bid-portal-demo-artifact-dev' } else { 'bid-portal-demo-artifact' } ]
 
 steps:
-# Use Node version 18.x
+  # Use Node version 18.x
 - task: NodeTool@0
   inputs:
     versionSpec: $(nodeVersion)
@@ -45,6 +44,18 @@ steps:
 - script: |
     pnpm build
   displayName: 'Build project'
+
+# Set artifact name
+- pwsh: |
+    if ("$(isDevBranch)" -eq "True") 
+    {
+      Write-Host "##vso[task.setvariable variable=artifactName;]bid-portal-demo-artifact-dev"
+    }
+    else
+    {
+      Write-Host "##vso[task.setvariable variable=artifactName;]bid-portal-demo-artifact"
+    }
+  displayName: 'Set Artifact Name'
 
 # Publish the build artifact
 - task: PublishBuildArtifacts@1
