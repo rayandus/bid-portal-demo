@@ -62,7 +62,7 @@ steps:
   inputs:
     # dist folder only. We don't need the rest of the files
     pathtoPublish: 'dist'
-    artifactName: ${artifactName}
+    artifactName: $(artifactName)
     publishLocation: 'Container'
   # Exclude PRs from creating an artifact
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['isDevBranch'], true))
