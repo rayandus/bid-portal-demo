@@ -1,0 +1,56 @@
+# Trigger any push to develop branch
+trigger:
+  branches:
+    include:
+    - develop
+
+# Trigger pipeline check if a PR is created against develop branch
+pr:
+  branches:
+    include:
+    - develop
+
+# Environment to use
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  NODE_RELEASE: '18.x'
+
+steps:
+# Use Node version 18.x
+- task: NodeTool@0
+  inputs:
+    versionSpec: $(NODE_RELEASE)
+  displayName: 'Use Node.js $(NODE_RELEASE)'
+
+# Use pnpm (much faster)
+- script: |
+    npm install -g pnpm
+  displayName: 'Install pnpm'
+
+# Install the packages
+- script: |
+    pnpm install
+  displayName: 'Install project packages'
+
+# Pre-build checks: lint, test
+- script: |
+    pnpm lint
+    pnpm test
+  displayName: 'Pre-build checks: lint, test'
+
+# Build the project
+- script: |
+    pnpm build
+  displayName: 'Build project'
+
+# Publish the build artifact
+- task: PublishBuildArtifacts@1
+  inputs:
+    # dist folder only. We don't need the rest of the files
+    pathtoPublish: 'dist'
+    artifactName: 'bid-portal-demo-artifact'
+    publishLocation: 'Container'
+  # Exclude PRs from creating an artifact and triggering a deployment in Azure Release
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
