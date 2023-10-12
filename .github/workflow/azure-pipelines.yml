@@ -1,10 +1,10 @@
-# Trigger any push to develop branch
+# Trigger to the branches
 trigger:
   branches:
     include:
     - develop
 
-# Trigger pipeline check if a PR is created against develop branch
+# Trigger pipeline check if a PR is created against the branches
 pr:
   branches:
     include:
@@ -16,6 +16,7 @@ pool:
 
 variables:
   NODE_RELEASE: '18.x'
+  IS_DEV_BRANCH: $[eq(variables['Build.SourceBranch'], 'refs/heads/dev')]
 
 steps:
 # Use Node version 18.x
@@ -52,5 +53,5 @@ steps:
     pathtoPublish: 'dist'
     artifactName: 'bid-portal-demo-artifact'
     publishLocation: 'Container'
-  # Exclude PRs from creating an artifact and triggering a deployment in Azure Release
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  # Exclude PRs from creating an artifact
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['IS_DEV_BRANCH'], true))
