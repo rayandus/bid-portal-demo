@@ -9,7 +9,7 @@ pr:
   autoCancel: true
   branches:
     include:
-      - '*'
+      - develop
 
 # Environment to use
 pool:
