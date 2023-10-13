@@ -1,6 +1,14 @@
-# Trigger from branches
+# Trigger pipeline from branches
 trigger:
-- develop
+  branches:
+    include:
+    - develop
+
+# Trigger pipeline from PRs
+pr:
+  autoCancel: true
+  branches:
+    include: ['*']
 
 # Environment to use
 pool:
