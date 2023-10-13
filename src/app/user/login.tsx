@@ -94,7 +94,7 @@ const Login = () => {
                 loadingPosition="start"
                 width="60%"
               >
-                Login
+                Login 1
               </Button>
               <Link to="/register">Register</Link>
             </Action>
