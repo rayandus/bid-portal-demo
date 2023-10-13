@@ -1,14 +1,15 @@
-# Trigger to the branches
+# Trigger pipeline from branches
 trigger:
   branches:
     include:
     - develop
 
-# Trigger pipeline check if a PR is created against the branches
+# Trigger pipeline from PRs. Currently, has to be configured in Azure DevOps settings for it to fully work
 pr:
+  autoCancel: true
   branches:
     include:
-    - develop
+      - develop
 
 # Environment to use
 pool:
