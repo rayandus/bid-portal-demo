@@ -8,7 +8,7 @@ trigger:
 pr:
   autoCancel: true
   branches:
-    include: ['*']
+    include: '*'
 
 # Environment to use
 pool:
