@@ -1,14 +1,6 @@
-# Trigger to the branches
+# Trigger from branches
 trigger:
-  branches:
-    include:
-    - develop
-
-# Trigger pipeline check if a PR is created against the branches
-pr:
-  branches:
-    include:
-    - develop
+- develop
 
 # Environment to use
 pool:
