@@ -1,7 +1,4 @@
 steps:
-- script: echo $(API_ENDPOINT)
-  displayName: 'From common steps'
-
 # Use Node version 18.x
 - task: NodeTool@0
   inputs:
@@ -28,18 +25,6 @@ steps:
     pnpm build
   displayName: 'Build project'
 
-# Set artifact name
-- pwsh: |
-    if ("$(isDevBranch)" -eq "True") 
-    {
-      Write-Host "##vso[task.setvariable variable=artifactName;]artifact-develop"
-    }
-    else
-    {
-      Write-Host "##vso[task.setvariable variable=artifactName;]artifact"
-    }
-  displayName: 'Set Artifact Name'
-
 # Publish the build artifact
 - task: PublishBuildArtifacts@1
   inputs:
@@ -48,4 +33,4 @@ steps:
     artifactName: $(artifactName)
     publishLocation: 'Container'
   # Exclude PRs from creating an artifact
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['isDevBranch'], true))
+  condition: and(succeeded(), ne(variables['isPullRequest'], true), eq(variables['isDev'], true))

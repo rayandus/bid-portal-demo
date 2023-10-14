@@ -15,20 +15,20 @@ pr:
 pool:
   vmImage: 'ubuntu-latest'
 
-# nodeVersion: '18.x'
-# isDevBranch: $[eq(variables['Build.SourceBranch'], 'refs/heads/develop')]
-
 variables:
   nodeVersion: '18.x'
-  isDevBranch: $[or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['System.PullRequest.TargetBranch'], 'develop'))]
+  isDev: $[or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['System.PullRequest.TargetBranch'], 'develop'))]
+  isPullRequest: eq(variables['Build.Reason'], 'PullRequest')
 
 stages:
-  - stage: DevBranchStage
-    displayName: 'Stage for Dev Branch'
-    condition: eq(variables.isDevBranch, true)
+  - stage: DevStage
+    displayName: 'Stage for Dev'
+    condition: eq(variables.isDev, true)
     variables:
       - group: bid-portal-demo-dev
+      - name: artifactName
+        value: artifact-dev
     jobs:
-      - job: Job1
+      - job: CommonSteps
         steps:
           - template: common-steps-azure-pipeline.yml
