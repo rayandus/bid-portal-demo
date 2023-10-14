@@ -28,7 +28,7 @@ variables:
 
 steps:
 # Test print variable
-- script: echo $(System.PullRequest.SourceBranch)
+- script: echo $(System.PullRequest.TargetBranch)
   displayName: 'Test print variable'
 
 # Use Node version 18.x
