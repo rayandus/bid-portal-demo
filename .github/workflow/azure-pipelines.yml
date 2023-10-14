@@ -23,12 +23,12 @@ variables:
     value: '18.x'
   - name: isDevBranch
     value: $[eq(variables['Build.SourceBranch'], 'refs/heads/develop')]
-  - name: TEST_VAR
-    value: ${{ Build.SourceBranch }}
+  # - name: TEST_VAR
+  #   value: ${{ Build.SourceBranch }}
 
 steps:
 # Test print variable
-- script: echo $(TEST_VAR)
+- script: echo ${{ Build.SourceBranch }}
   displayName: 'Test print variable'
 
 # Use Node version 18.x
