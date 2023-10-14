@@ -30,7 +30,7 @@ variables:
 
 steps:
 # Test print variable
-- script: echo $(API_ENDPOINT)
+- script: echo $(nodeVersion)
   displayName: 'Test print variable'
 
 # Use Node version 18.x
