@@ -23,14 +23,12 @@ variables:
     value: '18.x'
   - name: isDevBranch
     value: $[eq(variables['Build.SourceBranch'], 'refs/heads/develop')]
-  - ${{ if eq($[variables.myhello], true) }}:
-    - group: bid-portal-demo-dev
-  - ${{ elseif eq(variables['Build.SourceBranch'], 'refs/heads/develop') }}:
-    - group: bid-portal-demo-dev
+  - name: TEST_VAR
+    value: ${{ Build.SourceBranch }}
 
 steps:
 # Test print variable
-- script: echo $(API_ENDPOINT)
+- script: echo $(TEST_VAR)
   displayName: 'Test print variable'
 
 # Use Node version 18.x
