@@ -20,7 +20,7 @@ pool:
 
 variables:
   nodeVersion: '18.x'
-  isDevBranch: $[or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['System.PullRequest.TargetBranch'], 'refs/heads/develop'))]
+  isDevBranch: $[or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['System.PullRequest.TargetBranch'], 'develop'))]
 
 stages:
   - stage: DevBranchStage
