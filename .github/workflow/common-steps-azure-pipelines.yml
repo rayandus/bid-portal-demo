@@ -1,4 +1,9 @@
 steps:
+- script: |
+  echo "Build.Reason: $(Build.Reason)"
+  echo "isPullRequest: $(isPullRequest)"
+  echo "isDev: $(isDev)"
+
 # Use Node version 18.x
 - task: NodeTool@0
   inputs:
