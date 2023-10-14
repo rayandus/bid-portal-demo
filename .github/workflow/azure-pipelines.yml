@@ -24,9 +24,9 @@ variables:
   - name: isDevBranch
     value: $[eq(variables['Build.SourceBranch'], 'refs/heads/develop')]
   - ${{ if eq(variables['isDevBranch'], true) }}:
-    - group: Development
+    - group: bid-portal-demo-dev
   - ${{ elseif eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
-    - group: Production
+    - group: bid-portal-demo-prod
 
 steps:
 # Test print variable
