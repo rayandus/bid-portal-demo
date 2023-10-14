@@ -25,7 +25,7 @@ variables:
     value: $[eq(variables['Build.SourceBranch'], 'refs/heads/develop')]
   - ${{ if eq(variables['isDevBranch'], true) }}:
     - group: bid-portal-demo-dev
-  - ${{ elseif eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
+  - ${{ elseif eq(variables['Build.SourceBranch'], 'refs/heads/develop') }}:
     - group: bid-portal-demo-dev
 
 steps:
