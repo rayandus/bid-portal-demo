@@ -1,8 +1,9 @@
 steps:
 - script: |
-  echo "Build.Reason: $(Build.Reason)"
-  echo "isPullRequest: $(isPullRequest)"
-  echo "isDev: $(isDev)"
+    echo "Build.Reason: $(variables['Build.Reason'])"
+    echo "isPullRequest: $(variables.isPullRequest)"
+    echo "isDev: $(variables.isDev)"
+  displayName: 'Run a one-line script'
 
 # Use Node version 18.x
 - task: NodeTool@0
@@ -38,4 +39,4 @@ steps:
     artifactName: $(artifactName)
     publishLocation: 'Container'
   # Exclude PRs from creating an artifact
-  condition: and(succeeded(), ne(variables['isPullRequest'], true), eq(variables['isDev'], true))
+  condition: and(succeeded(), ne(variables.isPullRequest, true), eq(variables.isDev, true))
