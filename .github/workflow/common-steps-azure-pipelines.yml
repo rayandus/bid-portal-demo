@@ -1,8 +1,8 @@
 steps:
 - script: |
     echo "Build.Reason: $(variables['Build.Reason'])"
-    echo "isPullRequest: $(variables.isPullRequest)"
-    echo "isDev: $(variables.isDev)"
+    echo "isPullRequest: $(isPullRequest)"
+    echo "isDev: $(isDev)"
   displayName: 'Run a one-line script'
 
 # Use Node version 18.x
