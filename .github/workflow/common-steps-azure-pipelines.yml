@@ -1,10 +1,4 @@
 steps:
-- script: |
-    echo "Build.Reason: $(variables['Build.Reason'])"
-    echo "isPullRequest: $(isPullRequest)"
-    echo "isDev: $(isDev)"
-  displayName: 'Run a one-line script'
-
 # Use Node version 18.x
 - task: NodeTool@0
   inputs:

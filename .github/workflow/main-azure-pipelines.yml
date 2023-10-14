@@ -25,6 +25,7 @@ jobs:
   displayName: 'Build Steps for Dev'
   condition: eq(variables.isDev, true)
   variables:
+    # App variables stored in Azure DevOps. Will be automatically injected during build
     - group: bid-portal-demo-dev
     - name: artifactName
       value: artifact-dev
