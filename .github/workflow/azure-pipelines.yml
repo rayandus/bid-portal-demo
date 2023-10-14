@@ -28,7 +28,15 @@ variables:
 
 steps:
 # Test print variable
-- script: echo $(System.PullRequest.TargetBranch)
+# - script: echo $(System.PullRequest.TargetBranch)
+#   displayName: 'Test print variable'
+
+- script: |
+    export TARGET_BRANCH=${SYSTEM_PULLREQUEST_TARGETBRANCH:-$BUILD_SOURCEBRANCH}
+    make
+  displayName: 'Compile with target branch'
+
+- script: echo $(TARGET_BRANCH)
   displayName: 'Test print variable'
 
 # Use Node version 18.x
