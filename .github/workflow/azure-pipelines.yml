@@ -15,12 +15,25 @@ pr:
 pool:
   vmImage: 'ubuntu-latest'
 
+# nodeVersion: '18.x'
+# isDevBranch: $[eq(variables['Build.SourceBranch'], 'refs/heads/develop')]
+
 variables:
-  nodeVersion: '18.x'
-  isDevBranch: $[eq(variables['Build.SourceBranch'], 'refs/heads/develop')]
+  - name: nodeVersion
+    value: '18.x'
+  - name: isDevBranch
+    value: $[eq(variables['Build.SourceBranch'], 'refs/heads/develop')]
+  - ${{ if eq(variables['isDevBranch'], true) }}:
+    - group: Development
+  - ${{ elseif eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
+    - group: Production
 
 steps:
-  # Use Node version 18.x
+# Test print variable
+- script: echo $(API_ENDPOINT)
+  displayName: 'Test print variable'
+
+# Use Node version 18.x
 - task: NodeTool@0
   inputs:
     versionSpec: $(nodeVersion)
