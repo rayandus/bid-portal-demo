@@ -33,4 +33,4 @@ steps:
     artifactName: $(artifactName)
     publishLocation: 'Container'
   # Exclude PRs from creating an artifact
-  condition: and(succeeded(), ne(variables.isPullRequest, true), eq(variables.isDev, true))
+  condition: and(succeeded(), ne(variables.isPullRequest, true), or(eq(variables.isDev, true), eq(variables.isProd, true)))
