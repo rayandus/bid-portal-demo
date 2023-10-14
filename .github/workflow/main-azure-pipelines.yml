@@ -1,0 +1,47 @@
+# Trigger pipeline from branches
+trigger:
+  branches:
+    include:
+    - develop
+    - main
+
+# Trigger pipeline from PRs. Currently, has to be configured in Azure DevOps settings for it to fully work
+pr:
+  autoCancel: true
+  branches:
+    include:
+      - develop
+      - main
+
+# Environment to use
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  nodeVersion: '18.x'
+  isDev: $[or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['System.PullRequest.TargetBranch'], 'develop'))]
+  isProd: $[or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['System.PullRequest.TargetBranch'], 'main'))]
+  isPullRequest: $[ eq(variables['Build.Reason'], 'PullRequest') ]
+
+jobs:
+- job: BuildStepsForDev
+  displayName: 'Build Steps for Dev'
+  condition: eq(variables.isDev, true)
+  variables:
+    # App variables stored in Azure DevOps. Will be automatically injected during build
+    - group: bid-portal-demo-dev
+    - name: artifactName
+      value: artifact-dev
+  steps:
+    - template: common-steps-azure-pipelines.yml
+
+- job: BuildStepsForProd
+  displayName: 'Build Steps for Prod'
+  condition: eq(variables.isProd, true)
+  variables:
+    # App variables stored in Azure DevOps. Will be automatically injected during build
+    - group: bid-portal-demo-prod
+    - name: artifactName
+      value: artifact-prod
+  steps:
+    - template: common-steps-azure-pipelines.yml

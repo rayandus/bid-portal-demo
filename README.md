@@ -66,7 +66,7 @@ VITE_LANGUAGE=en
 VITE_CURRENCY=USD
 ```
 
-> Refernce on currency-based number formatting [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)
+> Reference on currency-based number formatting [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)
 
 1. Change the endpoint url
 
