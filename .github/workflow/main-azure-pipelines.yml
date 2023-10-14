@@ -31,4 +31,4 @@ stages:
     jobs:
       - job: CommonSteps
         steps:
-          - template: common-steps-azure-pipeline.yml
+          - template: common-steps-azure-pipelines.yml
