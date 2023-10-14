@@ -1,0 +1,51 @@
+steps:
+- script: echo $(API_ENDPOINT)
+  displayName: 'From common steps'
+
+# Use Node version 18.x
+- task: NodeTool@0
+  inputs:
+    versionSpec: $(nodeVersion)
+  displayName: 'Use Node.js $(nodeVersion)'
+
+# Use pnpm (much faster)
+- script: |
+    npm install -g pnpm
+  displayName: 'Install pnpm'
+
+# Install the packages
+- script: |
+    pnpm install
+  displayName: 'Install project packages'
+
+# Pre-build checks: lint, test
+- script: |
+    pnpm lint
+  displayName: 'Pre-build checks: lint, test'
+
+# Build the project
+- script: |
+    pnpm build
+  displayName: 'Build project'
+
+# Set artifact name
+- pwsh: |
+    if ("$(isDevBranch)" -eq "True") 
+    {
+      Write-Host "##vso[task.setvariable variable=artifactName;]artifact-develop"
+    }
+    else
+    {
+      Write-Host "##vso[task.setvariable variable=artifactName;]artifact"
+    }
+  displayName: 'Set Artifact Name'
+
+# Publish the build artifact
+- task: PublishBuildArtifacts@1
+  inputs:
+    # dist folder only. We don't need the rest of the files
+    pathtoPublish: 'dist'
+    artifactName: $(artifactName)
+    publishLocation: 'Container'
+  # Exclude PRs from creating an artifact
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['isDevBranch'], true))

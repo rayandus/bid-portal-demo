@@ -19,71 +19,16 @@ pool:
 # isDevBranch: $[eq(variables['Build.SourceBranch'], 'refs/heads/develop')]
 
 variables:
-  - name: nodeVersion
-    value: '18.x'
-  - name: isDevBranch
-    value: $[eq(variables['Build.SourceBranch'], 'refs/heads/develop')]
-  # - name: TEST_VAR
-  #   value: ${{ Build.SourceBranch }}
+  nodeVersion: '18.x'
+  isDevBranch: $[eq(variables['Build.SourceBranch'], 'refs/heads/develop')]
 
-steps:
-# Test print variable
-# - script: echo $(System.PullRequest.TargetBranch)
-#   displayName: 'Test print variable'
-
-- script: echo "##vso[task.setvariable variable=TARGET_BRANCH;]$(System.PullRequest.TargetBranch)"
-  condition: eq(variables['Build.Reason'], 'PullRequest')
-  displayName: 'Set TARGET_BRANCH variable for pull request'
-- script: echo "##vso[task.setvariable variable=TARGET_BRANCH;]$(Build.SourceBranch)"
-  condition: ne(variables['Build.Reason'], 'PullRequest')
-  displayName: 'Set TARGET_BRANCH variable for direct commit'
-- script: echo $(TARGET_BRANCH)
-  displayName: 'Test print variable'
-
-# Use Node version 18.x
-- task: NodeTool@0
-  inputs:
-    versionSpec: $(nodeVersion)
-  displayName: 'Use Node.js $(nodeVersion)'
-
-# Use pnpm (much faster)
-- script: |
-    npm install -g pnpm
-  displayName: 'Install pnpm'
-
-# Install the packages
-- script: |
-    pnpm install
-  displayName: 'Install project packages'
-
-# Pre-build checks: lint, test
-- script: |
-    pnpm lint
-  displayName: 'Pre-build checks: lint, test'
-
-# Build the project
-- script: |
-    pnpm build
-  displayName: 'Build project'
-
-# Set artifact name
-- pwsh: |
-    if ("$(isDevBranch)" -eq "True") 
-    {
-      Write-Host "##vso[task.setvariable variable=artifactName;]artifact-develop"
-    }
-    else
-    {
-      Write-Host "##vso[task.setvariable variable=artifactName;]artifact"
-    }
-  displayName: 'Set Artifact Name'
-
-# Publish the build artifact
-- task: PublishBuildArtifacts@1
-  inputs:
-    # dist folder only. We don't need the rest of the files
-    pathtoPublish: 'dist'
-    artifactName: $(artifactName)
-    publishLocation: 'Container'
-  # Exclude PRs from creating an artifact
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['isDevBranch'], true))
+stages:
+  - stage: DevBranchStage
+    displayName: 'Stage for Dev Branch'
+    condition: eq(variables.isDevBranch, true)
+    variables:
+      - group: bid-portal-demo-dev
+    jobs:
+      - job: Job1
+        steps:
+          - template: common-steps-azure-pipeline.yml
