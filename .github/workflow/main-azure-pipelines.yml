@@ -18,7 +18,7 @@ pool:
 variables:
   nodeVersion: '18.x'
   isDev: $[or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['System.PullRequest.TargetBranch'], 'develop'))]
-  isPullRequest: eq(variables['Build.Reason'], 'PullRequest')
+  isPullRequest: $[ eq(variables['Build.Reason'], 'PullRequest') ]
 
 jobs:
 - job: BuildStepsForDev
