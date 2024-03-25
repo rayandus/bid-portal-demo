@@ -38,9 +38,13 @@ steps:
     ArtifactName: 'www'
   condition: and(succeeded(), ne(variables.isPullRequest, true), or(eq(variables.isDev, true), eq(variables.isProd, true)))
 
-- script: |
-    echo $(Build.ArtifactStagingDirectory)
-  displayName: 'Print the build directory'
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      echo $(Build.ArtifactStagingDirectory)
+      ls $(Build.ArtifactStagingDirectory)
+  displayName: 'Run a one-line script'
 
 - task: AzureCLI@2
   inputs:
