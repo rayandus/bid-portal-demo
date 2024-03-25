@@ -18,10 +18,14 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  nodeVersion: '18.x'
-  isDev: $[or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['System.PullRequest.TargetBranch'], 'develop'))]
-  isProd: $[or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['System.PullRequest.TargetBranch'], 'main'))]
-  isPullRequest: $[ eq(variables['Build.Reason'], 'PullRequest') ]
+  - name: nodeVersion
+    value: '18.x'
+  - name: isDev
+    value: $[or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['System.PullRequest.TargetBranch'], 'develop'))]
+  - name: isProd
+    value: $[or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['System.PullRequest.TargetBranch'], 'main'))]
+  - name: isPullRequest
+    value: $[ eq(variables['Build.Reason'], 'PullRequest') ]
   - group: bid-portal-demo-dev
 
 jobs:
