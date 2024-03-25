@@ -51,7 +51,7 @@ steps:
 - script: |
     echo $(Build.ArtifactStagingDirectory)
     echo $(System.DefaultWorkingDirectory)
-    ls $(Build.ArtifactStagingDirectory)
+    ls $(Build.ArtifactStagingDirectory)/dist
   displayName: 'Print Default Working Directory and List Contents'
 
 - task: AzureCLI@2
