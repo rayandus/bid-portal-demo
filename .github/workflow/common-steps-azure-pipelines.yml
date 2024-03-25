@@ -34,3 +34,10 @@ steps:
     publishLocation: 'Container'
   # Exclude PRs from creating an artifact
   condition: and(succeeded(), ne(variables.isPullRequest, true), or(eq(variables.isDev, true), eq(variables.isProd, true)))
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: $(azureSubscription)
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: 'az storage blob upload-batch --destination \$web --account-name "bidportaldemodev" --source "$(System.DefaultWorkingDirectory)/_rayandus.bid-portal-demo/artifact-dev" --overwrite true'
