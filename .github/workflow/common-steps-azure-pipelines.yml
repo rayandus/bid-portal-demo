@@ -32,7 +32,6 @@ steps:
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - script: |
-    echo $(artifactName)
     echo $(azureSubscription)
   displayName: 'Print the build directory'
 
@@ -45,7 +44,7 @@ steps:
 
 - task: AzureCLI@2
   inputs:
-    azureSubscription: 'Azure subscription 1 (a9b787cf-7a6e-4c05-a790-adc3bf941755)'
+    azureSubscription: $(azureSubscription)
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: 'az storage blob upload-batch --destination \$web --account-name "bidportaldemodev" --source "$(Build.ArtifactStagingDirectory)/dist" --overwrite true'

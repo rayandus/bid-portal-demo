@@ -30,8 +30,6 @@ jobs:
   variables:
     # App variables stored in Azure DevOps. Will be automatically injected during build
     - group: bid-portal-demo-dev
-    - name: artifactName
-      value: artifact-dev
   steps:
     - template: common-steps-azure-pipelines.yml
 
@@ -41,7 +39,5 @@ jobs:
   variables:
     # App variables stored in Azure DevOps. Will be automatically injected during build
     - group: bid-portal-demo-prod
-    - name: artifactName
-      value: artifact-prod
   steps:
     - template: common-steps-azure-pipelines.yml
