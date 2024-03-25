@@ -31,16 +31,16 @@ steps:
     Contents: 'dist/**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
-# - script: |
-#     echo $(azureSubscription)
-#   displayName: 'Print the build directory'
-
 - task: PublishBuildArtifacts@1
   displayName: 'Publish to Azure Pipelines'
   inputs:
     PathtoPublish: $(Build.ArtifactStagingDirectory)
     ArtifactName: 'www'
   condition: and(succeeded(), ne(variables.isPullRequest, true), or(eq(variables.isDev, true), eq(variables.isProd, true)))
+
+- script: |
+    echo $(Build.ArtifactStagingDirectory)
+  displayName: 'Print the build directory'
 
 - task: AzureCLI@2
   inputs:
