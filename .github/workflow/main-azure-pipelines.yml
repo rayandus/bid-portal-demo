@@ -22,14 +22,15 @@ variables:
   isDev: $[or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['System.PullRequest.TargetBranch'], 'develop'))]
   isProd: $[or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['System.PullRequest.TargetBranch'], 'main'))]
   isPullRequest: $[ eq(variables['Build.Reason'], 'PullRequest') ]
+  - group: bid-portal-demo-dev
 
 jobs:
 - job: BuildStepsForDev
   displayName: 'Build Steps for Dev'
   condition: eq(variables.isDev, true)
-  variables:
-    # App variables stored in Azure DevOps. Will be automatically injected during build
-    - group: bid-portal-demo-dev
+  # variables:
+  #   # App variables stored in Azure DevOps. Will be automatically injected during build
+  #   - group: bid-portal-demo-dev
   steps:
     - template: common-steps-azure-pipelines.yml
 
