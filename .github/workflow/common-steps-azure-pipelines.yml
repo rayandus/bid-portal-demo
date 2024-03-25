@@ -37,7 +37,7 @@ steps:
 
 - script: |
     echo $(System.DefaultWorkingDirectory)
-    ls $(System.DefaultWorkingDirectory)
+    ls $(System.DefaultWorkingDirectory)/dist
   displayName: 'Print Default Working Directory and List Contents'
 
 - task: AzureCLI@2
