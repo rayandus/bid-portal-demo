@@ -36,6 +36,7 @@ steps:
   condition: and(succeeded(), ne(variables.isPullRequest, true), or(eq(variables.isDev, true), eq(variables.isProd, true)))
 
 - script: |
+    echo $(Build.ArtifactStagingDirectory)
     echo $(System.DefaultWorkingDirectory)
     ls $(System.DefaultWorkingDirectory)/dist
   displayName: 'Print Default Working Directory and List Contents'
