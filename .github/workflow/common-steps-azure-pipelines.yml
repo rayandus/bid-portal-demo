@@ -35,7 +35,7 @@ steps:
   displayName: 'Publish to Azure Pipelines'
   inputs:
     PathtoPublish: $(Build.ArtifactStagingDirectory)
-    ArtifactName: 'www'
+    # ArtifactName: 'www'
   condition: and(succeeded(), ne(variables.isPullRequest, true), or(eq(variables.isDev, true), eq(variables.isProd, true)))
 
 - task: Bash@3
