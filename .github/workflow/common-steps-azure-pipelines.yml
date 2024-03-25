@@ -31,6 +31,13 @@ steps:
     Contents: 'dist/**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
+steps:
+- script: |
+    echo $(artifactName)
+    echo $(azureSubscription)
+  displayName: 'Print the build directory'
+
+
 - task: PublishBuildArtifacts@1
   displayName: 'Publish to Azure Pipelines'
   inputs:
