@@ -35,6 +35,9 @@ steps:
   # Exclude PRs from creating an artifact
   condition: and(succeeded(), ne(variables.isPullRequest, true), or(eq(variables.isDev, true), eq(variables.isProd, true)))
 
+- script: echo $(System.DefaultWorkingDirectory)
+  displayName: 'Print Default Working Directory'
+
 - task: AzureCLI@2
   inputs:
     azureSubscription: 'Azure subscription 1 (a9b787cf-7a6e-4c05-a790-adc3bf941755)'
