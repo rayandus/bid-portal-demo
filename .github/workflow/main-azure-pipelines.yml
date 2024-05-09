@@ -21,24 +21,29 @@ pool:
 variables:
   - name: nodeVersion
     value: '18.x'
+  - name: isDev
+    value: $[or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['System.PullRequest.TargetBranch'], 'develop'))]
+  - name: isProd
+    value: $[or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['System.PullRequest.TargetBranch'], 'main'))]
   - name: isPullRequest
     value: $[ eq(variables['Build.Reason'], 'PullRequest') ]
-  # Set the library group variable. The group is defined in Azure DevOps.
-  - ${{ if or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['System.PullRequest.TargetBranch'], 'develop')) }}:
-      - group: bid-portal-demo-dev
-  - ${{ if or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['System.PullRequest.TargetBranch'], 'main')) }}:
-      - group: bid-portal-demo-prod
+  - group: bid-portal-demo-dev
 
-stages:
-# Build Stage for Dev
-- stage: BuildStage
-  displayName: 'Build'
-  jobs:
-  - job: BuildJob
-    steps:
-      # Echo repo name
-      - script: |
-          repo_name=$(echo $(Build.Repository.Name) | rev | cut -d'/' -f 1 | rev)
-          echo "Repository Name: $repo_name"
-        displayName: 'Repo Name'
-      - template: build-steps.yml
+jobs:
+- job: BuildStepsForDev
+  displayName: 'Build Steps for Dev'
+  condition: eq(variables.isDev, true)
+  # variables:
+  #   # App variables stored in Azure DevOps. Will be automatically injected during build
+  #   - group: bid-portal-demo-dev
+  steps:
+    - template: common-steps-azure-pipelines.yml
+
+- job: BuildStepsForProd
+  displayName: 'Build Steps for Prod'
+  condition: eq(variables.isProd, true)
+  variables:
+    # App variables stored in Azure DevOps. Will be automatically injected during build
+    - group: bid-portal-demo-prod
+  steps:
+    - template: common-steps-azure-pipelines.yml
