@@ -12,4 +12,4 @@ steps:
     azureSubscription: $(azureSubscription)
     scriptType: bash
     scriptLocation: inlineScript
-    inlineScript: 'az storage blob upload-batch --destination \$web --account-name "$(azureAccountStorage)" --source "$(Build.ArtifactStagingDirectory)/dist" --overwrite true'
+    inlineScript: 'az storage blob upload-batch --destination $web --account-name "$(azureAccountStorage)" --source "$(Build.ArtifactStagingDirectory)/dist" --overwrite true'
