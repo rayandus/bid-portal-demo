@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import styled from '@emotion/styled/macro';
 import { Alert, Card, TextField } from '@mui/material';
-import { Container, Title, Button } from '../common/components';
+import { Container, Title, Button, LoginAnnouncement } from '../common/components';
 import { useAuthenticate } from './hooks';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -51,6 +51,7 @@ const Login = () => {
   return (
     <Background>
       <Container maxWidth="sm">
+        <LoginAnnouncement />
         <LoginCard>
           <Title>Login</Title>
           <Form onSubmit={formik.handleSubmit} noValidate autoComplete="off">

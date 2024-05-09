@@ -5,7 +5,8 @@ trigger:
     - develop
     - main
 
-# Trigger pipeline from PRs. Currently, has to be configured in Azure DevOps settings for it to fully work
+# Trigger pipeline from PRs
+# By default, PR trigger is disabled. See Azure DevOps Project Settings > Triggers > Limit building pull requests from forked GitHub repositories
 pr:
   autoCancel: true
   branches:

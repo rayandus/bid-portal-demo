@@ -26,7 +26,7 @@ steps:
   displayName: 'Build project'
 
 - task: CopyFiles@2
-  displayName: 'Copy Build Output'
+  displayName: 'Copy Build to Staging Directory'
   inputs:
     Contents: 'dist/**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
