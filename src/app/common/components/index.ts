@@ -9,3 +9,4 @@ export { default as BidExpiryDuration } from './bid-expiry-duration';
 export * from './bid-expiry-duration';
 
 export * from './styled-components';
+export { default as LoginAnnouncement } from './login-announcement';

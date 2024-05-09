@@ -25,12 +25,41 @@ steps:
     pnpm build
   displayName: 'Build project'
 
-# Publish the build artifact
-- task: PublishBuildArtifacts@1
+- task: CopyFiles@2
+  displayName: 'Copy Build to Staging Directory'
   inputs:
-    # dist folder only. We don't need the rest of the files
-    pathtoPublish: 'dist'
-    artifactName: $(artifactName)
-    publishLocation: 'Container'
-  # Exclude PRs from creating an artifact
+    Contents: 'dist/**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
   condition: and(succeeded(), ne(variables.isPullRequest, true), or(eq(variables.isDev, true), eq(variables.isProd, true)))
+
+# - task: PublishBuildArtifacts@1
+#   displayName: 'Publish to Azure Pipelines'
+#   inputs:
+#     PathtoPublish: $(Build.ArtifactStagingDirectory)
+#     # ArtifactName: 'www'
+#   condition: and(succeeded(), ne(variables.isPullRequest, true), or(eq(variables.isDev, true), eq(variables.isProd, true)))
+
+# Publish the build artifact
+# - task: PublishBuildArtifacts@1
+#   inputs:
+#     # dist folder only. We don't need the rest of the files
+#     pathtoPublish: 'dist'
+#     # artifactName: $(artifactName)
+#     publishLocation: $(Build.ArtifactStagingDirectory)
+#   # Exclude PRs from creating an artifact
+#   condition: and(succeeded(), ne(variables.isPullRequest, true), or(eq(variables.isDev, true), eq(variables.isProd, true)))
+
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      echo $(Build.ArtifactStagingDirectory)
+      ls $(Build.ArtifactStagingDirectory)
+  displayName: 'Run a one-line script'
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: $(azureSubscription)
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: 'az storage blob upload-batch --destination \$web --account-name "bidportaldemodev" --source "$(Build.ArtifactStagingDirectory)/dist" --overwrite true'
