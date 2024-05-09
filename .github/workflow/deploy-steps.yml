@@ -3,7 +3,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      echo "Storage Account: $(azureAccountStorage)""
+      echo "Storage Account: $(azureAccountStorage)"
   displayName: 'Echo Storage Account'
 
 - task: AzureCLI@2
