@@ -48,6 +48,7 @@ const AlertStyled = styled(Alert)`
 const KnowMoreLink = styled(Link)`
   display: flex;
   margin-top: 10px !important;
+  width: fit-content;
 `;
 
 export default LoginAnnouncement;
