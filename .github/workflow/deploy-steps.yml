@@ -1,0 +1,14 @@
+steps:
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      echo "Storage Account: $(azureAccountStorage)"
+  displayName: 'Echo Storage Account'
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: $(azureSubscription)
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: 'az storage blob upload-batch --destination \$web --account-name "$(azureAccountStorage)" --source "$(Build.ArtifactStagingDirectory)" --overwrite true'
