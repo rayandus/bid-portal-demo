@@ -15,10 +15,10 @@ steps:
     pnpm install
   displayName: 'Install project packages'
 
-# Pre-build checks: lint, test
+# Pre-build checks: lint
 - script: |
     pnpm lint
-  displayName: 'Pre-build checks: lint, test'
+  displayName: 'Pre-build checks: lint'
 
 # Build the project
 - script: |
